@@ -15,8 +15,8 @@ const Home = () => {
       {/* else */}
       {/* show empty chatbox is message */}
       {/* <Caster 
-      heading="Start Chat"
-      message="Think of convo starter and start chatting"
+      heading="Start chatting with MeChat"
+      message="Find person to start messaging."
       className="text-center"
       /> */}
     </div>

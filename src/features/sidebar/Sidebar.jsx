@@ -10,11 +10,11 @@ const Sidebar = () => {
   ]
   return (
     <>
-      <nav className="">
+      <nav className="relative hidden px-4 pt-8 pb-2 w-fit bg-slate-900 md:flex md:flex-col gap-4">
         {/* USER AVATAR */}
         <button
           onClick={() => sidebarBtnHandler("profile")}
-          className="text relative group flex"
+          className="text relative group flex justify-center"
         >
           <Avatar
             isOnline={false}
@@ -28,14 +28,14 @@ const Sidebar = () => {
         <div className="flex flex-col gap-1">
           {MENU_LIST.map((menu) => {
             return (
-              <button>
+              <button className="text-white">
                 {menu.name}
               </button>
             )
           })}
         </div>
         <div className="absolute bottom-4">
-          <button>
+          <button className="text-white">
             Log out
           </button>
         </div>
