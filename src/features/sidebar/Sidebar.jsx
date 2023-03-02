@@ -10,7 +10,7 @@ const Sidebar = () => {
   ]
   return (
     <>
-      <nav className="relative hidden px-4 pt-8 pb-2 w-fit bg-slate-900 md:flex md:flex-col gap-4">
+      <nav className="relative hidden px-4 pt-4 pb-2 w-fit bg-slate-800 md:flex md:flex-col gap-4">
         {/* USER AVATAR */}
         <button
           onClick={() => sidebarBtnHandler("profile")}
