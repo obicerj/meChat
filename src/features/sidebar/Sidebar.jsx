@@ -1,13 +1,27 @@
 import React from "react";
 import Avatar from "../../components/Avatar";
+import { HiOutlineChatBubbleLeftRight, HiOutlineUserGroup, HiOutlineUser } from "react-icons/hi2";
+import { FiLogOut } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { getSidebarContent } from "../../reducers/sidebarContentReducer";
+import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
 
 const Sidebar = () => {
 
   const MENU_LIST = [
-    { name: "chats", icon: "", link: "chats" },
-    { name: "search", icon: "", link: "search" },
-    { name: "profile", icon: "", link: "profile" },
-  ]
+    { name: "chats", content: "convos", icon: <HiOutlineChatBubbleLeftRight />, link: "chats" },
+    { name: "search", content: "search", icon: <HiOutlineUserGroup />, link: "search" },
+    { name: "profile", content: "profile", icon: <HiOutlineUser />, link: "profile" },
+  ];
+
+  const { content: sidebarContent } = useSelector(getSidebarContent);
+  const dispatch = useDispatch();
+
+  const sidebarBtnHandler = (content) => {
+    content = content.replace(" ", "");
+    dispatch(changeSidebarContent({ content }));
+  }
+
   return (
     <>
       <nav className="relative hidden px-4 pt-4 pb-2 w-fit bg-slate-800 md:flex md:flex-col gap-4">
@@ -28,15 +42,17 @@ const Sidebar = () => {
         <div className="flex flex-col gap-1">
           {MENU_LIST.map((menu) => {
             return (
-              <button className="text-white">
-                {menu.name}
+              <button key={menu.name} 
+              className="text-white text-3xl"
+              onClick={() => sidebarBtnHandler(menu.content)}>
+                {menu.icon}
               </button>
             )
           })}
         </div>
-        <div className="absolute bottom-4">
-          <button className="text-white">
-            Log out
+        <div className="absolute bottom-4 flex flex-col justify-center items-center">
+          <button className="text-white text-2xl">
+            <FiLogOut />
           </button>
         </div>
       </nav>

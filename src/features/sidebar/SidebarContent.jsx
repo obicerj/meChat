@@ -2,8 +2,13 @@ import React from "react";
 import { ConvoContainer } from "../inbox";
 import Profile from "../profile/Profile";
 import SearchPeople from "../search/SearchPeople";
+import { useSelector } from "react-redux";
+import { getSidebarContent } from "../../reducers/sidebarContentReducer";
 
 const sidebarContent = () => {
+
+  const { content: sidebarContent } = useSelector(getSidebarContent)
+
   return (
     <aside className="
     relative 
@@ -12,13 +17,19 @@ const sidebarContent = () => {
     border-r border-main 
     w-full h-full md:w-32 md:min-w-[24rem] overflow-x-hidden">
       {/* List of convos / Messages */}
-      <ConvoContainer />
-
+      {sidebarContent  === "convos" && (
+        <ConvoContainer />
+      )}
+      
       {/* Search */}
-      {/* <SearchPeople /> */}
+      {sidebarContent === "search" && (
+        <SearchPeople />
+      )}
 
       {/* Profile */}
-      {/* <Profile /> */}
+      {sidebarContent === "profile" && (
+        <Profile />
+      )}
     </aside>
   );
 };

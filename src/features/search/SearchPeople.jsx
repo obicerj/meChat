@@ -1,7 +1,7 @@
 import React from "react";
 
 const SearchPeople = () => {
-  return <div>SearchPeople</div>;
+  return <div className="text-gray-300">SearchPeople</div>;
 };
 
 export default SearchPeople;
