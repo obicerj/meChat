@@ -1,7 +1,12 @@
 import React from "react";
+import ConvoList from "./ConvoList";
 
 const ConvoContainer = () => {
-  return <div>List of convos</div>;
+  return (
+    <>
+      <ConvoList />
+    </>
+  );
 };
 
 export default ConvoContainer;
