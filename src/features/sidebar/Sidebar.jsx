@@ -5,6 +5,8 @@ import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { getSidebarContent } from "../../reducers/sidebarContentReducer";
 import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Sidebar = () => {
 
@@ -51,7 +53,8 @@ const Sidebar = () => {
           })}
         </div>
         <div className="absolute bottom-4 flex flex-col justify-center items-center">
-          <button className="text-white text-2xl">
+          <button className="text-white text-2xl" 
+          onClick={() => signOut(auth)}>
             <FiLogOut />
           </button>
         </div>
