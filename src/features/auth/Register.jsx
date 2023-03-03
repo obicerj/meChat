@@ -92,7 +92,7 @@ const Register = ({setIsAuth}) => {
           </div>
           }
 
-          <button className="bg-green-500 text-lg text-white rounded-lg px-4 py-2.5">
+          <button className="bg-green-600 font-bold text-lg text-white rounded-lg px-4 py-2.5 mt-2.5">
             Submit
           </button>
           <p className="text-slate-300">

@@ -53,7 +53,7 @@ const Login = ({ setIsAuth}) => {
           </div>
           }
 
-          <button className="bg-green-500 font-bold text-lg text-white rounded-lg px-4 py-2.5">
+          <button className="bg-blue-700 font-bold text-lg text-white rounded-lg px-4 py-2.5 mt-2.5">
             Log in
           </button>
           <p className="text-slate-300">
