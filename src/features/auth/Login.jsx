@@ -1,6 +1,8 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 import Input from "../../components/Input";
+import { auth } from "../../firebase";
 
 const Login = ({ setIsAuth}) => {
   const [err, setErr] = useState(false);
