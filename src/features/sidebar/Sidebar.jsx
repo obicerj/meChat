@@ -41,7 +41,7 @@ const Sidebar = () => {
         </button>
 
         {/* NAV MENU */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-8 mt-6">
           {MENU_LIST.map((menu) => {
             return (
               <button key={menu.name} 
