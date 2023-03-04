@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import sidebarContentReducer from "../reducers/sidebarContentReducer";
 import storage from "redux-persist/lib/storage";
+import convoReducer from "../reducers/convoReducer";
 
 const persistConfig = {
   key: "root",
@@ -13,6 +14,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
   sidebarContent: sidebarContentReducer,
+  convo: convoReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

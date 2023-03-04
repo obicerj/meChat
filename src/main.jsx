@@ -7,18 +7,20 @@ import App from './App'
 import './index.css'
 import store from './setup/store'
 import { AuthContextProvider } from './context/AuthContext';
+import { ChatContextProvider } from './context/ConvoContext';
 
 // let persistor = persistStore(store);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <AuthContextProvider>
-      {/* <PersistGate persistor={persistor}> */}
+      <ChatContextProvider>
+        {/* <PersistGate persistor={persistor}> */}
         <React.StrictMode>
           <App />
         </React.StrictMode>
-      {/* </PersistGate> */}
+        {/* </PersistGate> */}
+      </ChatContextProvider>
     </AuthContextProvider>
   </Provider>
-  
-)
+);
