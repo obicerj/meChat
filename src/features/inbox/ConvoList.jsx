@@ -33,7 +33,7 @@ const ConvoList = () => {
 
   return (
     <>
-      <div className="flex flex-col sticky top-0 bg-slate-900">
+      <div className="flex flex-col sticky top-0 bg-slate-900 z-10">
         {/* HEADER */}
         <header className="flex flex-row justify-between px-2 py-2 mt-2">
           <h2 className="text-2xl text-gray-300 mx-2">Chats</h2>
