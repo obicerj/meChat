@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "../../components/Avatar";
-import { HiOutlineChatBubbleLeftRight, HiOutlineUserGroup, HiOutlineUser } from "react-icons/hi2";
+import { RiContactsLine, RiUserSmileLine, RiMessage3Line } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { getSidebarContent } from "../../reducers/sidebarContentReducer";
@@ -11,9 +11,9 @@ import { auth } from "../../firebase";
 const Sidebar = () => {
 
   const MENU_LIST = [
-    { name: "chats", content: "convos", icon: <HiOutlineChatBubbleLeftRight />, link: "chats" },
-    { name: "search", content: "search", icon: <HiOutlineUserGroup />, link: "search" },
-    { name: "profile", content: "profile", icon: <HiOutlineUser />, link: "profile" },
+    { name: "chats", content: "convos", icon: <RiMessage3Line />, link: "chats" },
+    { name: "search", content: "search", icon: <RiContactsLine />, link: "search" },
+    { name: "profile", content: "profile", icon: <RiUserSmileLine />, link: "profile" },
   ];
 
   const { content: sidebarContent } = useSelector(getSidebarContent);
@@ -45,7 +45,7 @@ const Sidebar = () => {
           {MENU_LIST.map((menu) => {
             return (
               <button key={menu.name} 
-              className="text-white text-3xl"
+              className="text-blue-400 text-2xl"
               onClick={() => sidebarBtnHandler(menu.content)}>
                 {menu.icon}
               </button>
@@ -53,7 +53,7 @@ const Sidebar = () => {
           })}
         </div>
         <div className="absolute bottom-4 flex flex-col justify-center items-center">
-          <button className="text-white text-2xl" 
+          <button className="text-red-600 text-2xl" 
           onClick={() => signOut(auth)}>
             <FiLogOut />
           </button>
