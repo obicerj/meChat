@@ -17,7 +17,7 @@ const Convo = () => {
           {/* CONVO HEADER */}
           <header className="bg-slate-800 w-full px-4 pt-6 pb-4 mb-auto flex gap-2 items-center text-white">
             <Avatar
-              imgURL={"https://via.placeholder.com/150"}
+              imgURL={`https://picsum.photos/seed/${data.user?.displayName}/200/200`}
               className={""}
               size={"small"}
             />
@@ -26,7 +26,7 @@ const Convo = () => {
 
           {/* Message bubble */}
           <main className="relative flex flex-col overflow-y-scroll overflow-x-hidden px-4 py-2 gap-2 hide-scrollbar">
-            <MessageBubbleWrapper />
+            <MessageBubbleWrapper user={data.user} />
           </main>
 
           {/* Write message */}

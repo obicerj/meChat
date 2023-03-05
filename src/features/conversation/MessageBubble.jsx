@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import useFormatDate from "../../utils/hooks/useFormatDate";
 
-const MessageBubble = ({ message }) => {
+const MessageBubble = ({ message, user }) => {
   const { currentUser } = useContext(AuthContext);
 
   const [msgDate, setMsgDate] = useState("");
@@ -62,7 +62,7 @@ const MessageBubble = ({ message }) => {
               <button>
                 <div>
                   <Avatar 
-                    imgURL={'https://via.placeholder.com/150'}
+                    imgURL={`https://picsum.photos/seed/${user?.displayName}/200/200`}
                     size={'small'}
                   />
                 </div>

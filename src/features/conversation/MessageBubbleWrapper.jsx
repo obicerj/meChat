@@ -4,7 +4,7 @@ import { ConvoContext } from "../../context/ConvoContext";
 import { db } from "../../firebase";
 import MessageBubble from "./MessageBubble";
 
-const MessageBubbleWrapper = () => {
+const MessageBubbleWrapper = ({user}) => {
   const [messages, setMessages] = useState([]);
   const {data} = useContext(ConvoContext);
 
@@ -21,7 +21,7 @@ const MessageBubbleWrapper = () => {
   return (
     <div>
       {messages?.map((m, index) => (
-        <MessageBubble message={m[1]} key={index}/>
+        <MessageBubble message={m[1]} user={user} key={index}/>
       ))}
     </div>
   );
