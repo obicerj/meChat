@@ -208,7 +208,7 @@ const SearchPeople = () => {
 
   return (
     <>
-      <div className="flex flex-col sticky top-0 bg-slate-900">
+      <div className="flex flex-col sticky top-0 bg-slate-900 z-10">
         <div className="flex flex-col justify-between px-2 py-2 mx-2 mt-2">
           <h2 className="text-2xl text-gray-300">Search</h2>
           {/* <button>
@@ -216,20 +216,18 @@ const SearchPeople = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
             </svg>
           </button> */}
-        <input
-          type="text"
-          placeholder="Search"
-          onKeyUp={handleKey}
-          onChange={(e) => setSearchVal(e.target.value)}
-          // value={searchVal}
-          name=""
-          id=""
-          className="w-full bg-slate-300 rounded-full mt-4 py-1.5 px-2.5 outline-0"
-        />
+          <input
+            type="text"
+            placeholder="Search"
+            onKeyUp={handleKey}
+            onChange={(e) => setSearchVal(e.target.value)}
+            // value={searchVal}
+            name=""
+            id=""
+            className="w-full bg-slate-300 rounded-full mt-4 py-1.5 px-2.5 outline-0"
+          />
         </div>
-        
       </div>
-
 
       <div className="mt-4 mx-2">
         <ul className="flex flex-col gap-2 mt-4">
@@ -258,13 +256,15 @@ const SearchPeople = () => {
                   hover:bg-gray-700/50"
                   >
                     <div>
-                      <Avatar 
-                      imgURL={`https://picsum.photos/seed/${user.displayName}/200/200`}
-                      size={'small'}
+                      <Avatar
+                        imgURL={`https://picsum.photos/seed/${user.displayName}/200/200`}
+                        size={"small"}
                       />
                     </div>
                     <div>
-                      <h2 className="text-md text-gray-100">{user.displayName}</h2>
+                      <h2 className="text-md text-gray-100">
+                        {user.displayName}
+                      </h2>
                     </div>
                   </li>
                 ))}
@@ -282,13 +282,15 @@ const SearchPeople = () => {
                   hover:bg-gray-700/50"
                   >
                     <div>
-                      <Avatar 
-                      imgURL={`https://picsum.photos/seed/${user.displayName}/200/200`}
-                      size={'small'}
+                      <Avatar
+                        imgURL={`https://picsum.photos/seed/${user.displayName}/200/200`}
+                        size={"small"}
                       />
                     </div>
                     <div>
-                      <h2 className="text-md text-gray-100">{user.displayName}</h2>
+                      <h2 className="text-md text-gray-100">
+                        {user.displayName}
+                      </h2>
                     </div>
                   </li>
                 ))}
