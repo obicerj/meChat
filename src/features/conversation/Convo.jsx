@@ -25,7 +25,7 @@ const Convo = () => {
           </header>
 
           {/* Message bubble */}
-          <main className="relative flex flex-col overflow-y-scroll overflow-x-hidden px-2 py-2 gap-2 hide-scrollbar">
+          <main className="relative flex flex-col overflow-y-scroll overflow-x-hidden px-4 py-2 gap-2 hide-scrollbar">
             <MessageBubbleWrapper />
           </main>
 
