@@ -14,7 +14,7 @@ const Avatar = ({ imgURL, isOnline, className, size }) => {
     }
   }
   return (
-    <div className={` ${className} relative `}>
+    <div className={` ${className} relative  ${setSize(size)}`}>
       <img src={ imgURL } className={` rounded-full ${setSize(size)} `} />
       <div
         className={`${isOnline ? 'bg-green-500' : ''} p-1.5 rounded-full absolute right-0 bottom-0`}
