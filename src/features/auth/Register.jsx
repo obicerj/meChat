@@ -1,11 +1,14 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Input from "../../components/Input";
 import { auth, db } from "../../firebase";
+import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
 
 const Register = ({setIsAuth}) => {
   const [err, setErr] = useState(false);
+  const dispatch = useDispatch();
 
   const handleRegistration = async (e) => {
     e.preventDefault();
@@ -36,9 +39,7 @@ const Register = ({setIsAuth}) => {
         });
 
         await setDoc(doc(db, "userChats", res.user.uid), {});
-
-        // navigate("/chats");
-        // dispatch Convo
+        dispatch(changeSidebarContent("convos"));
       } catch (err) {
         console.log(err);
         setErr(true);

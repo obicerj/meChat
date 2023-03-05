@@ -3,9 +3,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Input from "../../components/Input";
 import { auth } from "../../firebase";
+import { useDispatch } from "react-redux";
+import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
 
 const Login = ({ setIsAuth}) => {
   const [err, setErr] = useState(false);
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -14,7 +17,7 @@ const Login = ({ setIsAuth}) => {
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
-        // navigate("/chats")
+        dispatch(changeSidebarContent("convos"));
     } catch (err) {
         setErr(true);
     }
