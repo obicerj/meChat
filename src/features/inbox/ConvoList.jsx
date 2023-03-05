@@ -57,7 +57,7 @@ const ConvoList = () => {
                   hover:bg-gray-700/50"
                   >
                     <div>
-                      <Avatar imgURL={"https://via.placeholder.com/150"} />
+                      <Avatar imgURL={`https://picsum.photos/seed/${convo[1].userInfo.displayName}/200/200`}/>
                     </div>
                     <div>
                       <h2 className="text-md text-gray-100">
