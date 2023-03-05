@@ -12,6 +12,8 @@ const Register = ({setIsAuth}) => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
+    const location = 'Earth';
+    const bio = 'Something about me';
 
     try {
       // Creaste user
@@ -20,6 +22,8 @@ const Register = ({setIsAuth}) => {
         //Update profile
         await updateProfile(res.user, {
           displayName,
+          location,
+          bio
         });
 
         // Store user to firestore
@@ -27,6 +31,8 @@ const Register = ({setIsAuth}) => {
           uid: res.user.uid,
           displayName,
           email,
+          location,
+          bio
         });
 
         await setDoc(doc(db, "userChats", res.user.uid), {});

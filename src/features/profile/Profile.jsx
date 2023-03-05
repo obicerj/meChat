@@ -1,8 +1,33 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 import Avatar from "../../components/Avatar";
 import { FiMail, FiMapPin } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserState, editProfile } from "../../reducers/userSlice";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
+
+
 
 const Profile = () => {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const docRef = doc(db, "users", auth.currentUser.uid);
+    getDoc(docRef)
+      .then((doc) => {
+        if (doc.exists()) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  }, []);
+
+
   return (
     <div>
       <div className="flex flex-col sticky top-0 bg-slate-900 z-10">
@@ -18,15 +43,15 @@ const Profile = () => {
           className=""
         />
         <div className="text-gray-200">
-          <h1 className="text-lg font-semibold mt-2">Name</h1>
-          <p className="text-gray-400">Bio</p>
+          <h1 className="text-lg font-semibold mt-2">{user?.displayName}</h1>
+          <p className="text-gray-400">{user?.bio}</p>
         </div>
       </div>
       <div className="mx-6">
         <hr className="border-slate-700" />
         <ul className="flex flex-col gap-2 text-gray-200 mt-4">
-          <li className="flex flex-row items-center gap-2"><FiMail /><span>email</span></li>
-          <li className="flex flex-row items-center gap-2"><FiMapPin /><span>location</span></li>
+          <li className="flex flex-row items-center gap-2"><FiMail /><span>{user?.email}</span></li>
+          <li className="flex flex-row items-center gap-2"><FiMapPin /><span>{user?.location}</span></li>
         </ul>
         <button className="bg-blue-500 text-white w-full rounded-lg py-2 my-4">
           Edit
