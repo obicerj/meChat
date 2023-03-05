@@ -4,6 +4,7 @@ import Avatar from "../../components/Avatar";
 import { AuthContext } from "../../context/AuthContext";
 import { ConvoContext } from "../../context/ConvoContext";
 import { db } from "../../firebase";
+import useFormatDate from "../../utils/hooks/useFormatDate";
 
 const ConvoList = () => {
 
@@ -11,6 +12,8 @@ const ConvoList = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ConvoContext);
+
+  const formatDate = useFormatDate();
 
   useEffect(() => {
     dispatch({ type: "CHANGE_USER", payload: ""});
@@ -68,8 +71,7 @@ const ConvoList = () => {
                         <p className="text-xs text-gray-400">
                           {convo[1].lastMessage?.text} <span>• </span>
                           <time className="w-fit">
-                            {/* {convo[1].date?.toDate()} */}
-                            Date
+                            {formatDate(convo[1].date?.toDate())}
                           </time>
                         </p>
                       )}
