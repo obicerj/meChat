@@ -287,7 +287,7 @@ const SearchPeople = () => {
                       />
                     </div>
                     <div>
-                      <h2 className="text-md">{user.displayName}</h2>
+                      <h2 className="text-md text-gray-100">{user.displayName}</h2>
                     </div>
                   </li>
                 ))}
