@@ -9,6 +9,8 @@ const Avatar = ({ imgURL, isOnline, className, size }) => {
         return "w-12 h-12";
       case "large":
         return "w-14 h-14";
+      case "extra-large":
+        return "w-24 h-24";
       default:
         return "w-8 h-8";
     }
