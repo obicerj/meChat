@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import useGetUsers from "../../utils/hooks/useGetUsers";
 import { changeConvo } from "../../reducers/convoReducer";
 import { ConvoContext } from "../../context/ConvoContext";
+import Avatar from "../../components/Avatar";
 
 const SearchPeople = () => {
   const [ usersList, setUsersList ] = useState([]);
@@ -257,9 +258,9 @@ const SearchPeople = () => {
                   hover:bg-gray-700/50"
                   >
                     <div>
-                      <img
-                        src="https://via.placeholder.com/150"
-                        className="w-11 h-11 rounded-full"
+                      <Avatar 
+                      imgURL={`https://picsum.photos/seed/${user.displayName}/200/200`}
+                      size={'small'}
                       />
                     </div>
                     <div>
@@ -281,9 +282,9 @@ const SearchPeople = () => {
                   hover:bg-gray-700/50"
                   >
                     <div>
-                      <img
-                        src="https://via.placeholder.com/150"
-                        className="w-11 h-11 rounded-full"
+                      <Avatar 
+                      imgURL={`https://picsum.photos/seed/${user.displayName}/200/200`}
+                      size={'small'}
                       />
                     </div>
                     <div>
