@@ -10,31 +10,39 @@ const WriteMessage = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ConvoContext);
 
-  const handleSend = async () => {
-    await updateDoc(doc(db, "chats", data.chatId), {
-      message: arrayUnion({
-        id: uuid(),
-        text,
-        senderId: currentUser.uid,
-        date: Timestamp.now()
-      })
-    });
-
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [data.chatId + ".lastMessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-
-    await updateDoc(doc(db, "userChats", data.user.uid), {
-      [data.chatId + ".lastMessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-
-    setText("");
+  const handleSend = async (e) => {
+    e.preventDefault();
+    
+    try {
+      if(text) {
+        await updateDoc(doc(db, "chats", data.chatId), {
+          message: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now()
+          })
+        });
+    
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [data.chatId + ".lastMessage"]: {
+            text,
+          },
+          [data.chatId + ".date"]: serverTimestamp(),
+        });
+    
+        await updateDoc(doc(db, "userChats", data.user.uid), {
+          [data.chatId + ".lastMessage"]: {
+            text,
+          },
+          [data.chatId + ".date"]: serverTimestamp(),
+        });
+    
+        setText("");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   return (
