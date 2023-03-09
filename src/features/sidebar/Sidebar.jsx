@@ -7,6 +7,7 @@ import { getSidebarContent } from "../../reducers/sidebarContentReducer";
 import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
+import { logout } from "../auth";
 
 const Sidebar = () => {
 
@@ -16,12 +17,16 @@ const Sidebar = () => {
     { name: "profile", content: "profile", icon: <RiUserSmileLine />, link: "profile" },
   ];
 
-  const { content: sidebarContent } = useSelector(getSidebarContent);
+  // const { content: sidebarContent } = useSelector(getSidebarContent);
   const dispatch = useDispatch();
 
   const sidebarBtnHandler = (content) => {
     content = content.replace(" ", "");
     dispatch(changeSidebarContent({ content }));
+  }
+
+  const handleSignOut = () => {
+    dispatch(logout());
   }
 
   return (
@@ -54,7 +59,7 @@ const Sidebar = () => {
         </div>
         <div className="absolute bottom-4 flex flex-col justify-center items-center">
           <button className="text-red-600 text-2xl" 
-          onClick={() => signOut(auth)}>
+          onClick={ handleSignOut }>
             <FiLogOut />
           </button>
         </div>

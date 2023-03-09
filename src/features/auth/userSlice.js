@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
 const initialState = {
@@ -58,6 +58,19 @@ export const emailLogin = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk("user/logout", async (state) => {
+  try {
+    if(auth.currentUser) {
+      const userDocRef = doc(db, "users", auth.currentUser.uid);
+      await updateDoc(userDocRef, {
+        status: "offline",
+      });
+    }
+  } catch (err) {
+    throw err.message;
+  }
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -65,6 +78,22 @@ export const userSlice = createSlice({
     login: (state, action) => {
       state.user = action.payload;
     },
+    logout: (state) => {
+      if (auth.currentUser) {
+        const userDocRef = doc(db, "users", auth.currentUser.uid);
+        updateDoc(userDocRef, {
+          status: "offline",
+        });
+      }
+      state.user = initialState;
+      signOut(auth);
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout.fulfilled, (state) => {
+      state.user = initialState;
+      signOut(auth);
+    });
   }
 });
 
