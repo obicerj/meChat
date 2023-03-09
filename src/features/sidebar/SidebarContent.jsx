@@ -3,7 +3,7 @@ import { ConvoContainer } from "../inbox";
 import Profile from "../profile/Profile";
 import SearchPeople from "../search/SearchPeople";
 import { useSelector } from "react-redux";
-import { getSidebarContent } from "../../reducers/sidebarContentReducer";
+import { getSidebarContent } from "./sidebarContentSlice";
 
 const sidebarContent = () => {
 

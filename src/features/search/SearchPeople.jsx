@@ -3,7 +3,7 @@ import { collection, getDocs, query, setDoc, where, doc, updateDoc, getDoc, serv
 import { db } from "../../firebase";
 import { AuthContext } from "../../context/AuthContext";
 import useGetUsers from "../../utils/hooks/useGetUsers";
-import { changeConvo } from "../../reducers/convoReducer";
+import { changeConvo } from "../conversation/convoSlice";
 import { ConvoContext } from "../../context/ConvoContext";
 import Avatar from "../../components/Avatar";
 

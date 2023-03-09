@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Avatar from "../../components/Avatar";
 import { FiMail, FiMapPin } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserState, editProfile } from "../../reducers/userSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getUserState, editProfile } from "../../reducers/userSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
