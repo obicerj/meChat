@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
@@ -40,7 +40,28 @@ const setUserInfoDoc = async () => {
 
     if(userChatsData) return;
   }
-}
+};
+
+export const editProfile = createAsyncThunk(
+  "user/editProfile",
+  async (editInfo) => {
+    try {
+      if(!auth.currentUser) return;
+      const userDocRef = doc(db, "users", auth.currentUser.uid);
+
+      await updateProfile(auth.currentUser, {
+        displayName: editInfo.displayName,
+      });
+      await updateDoc(userDocRef, {
+        displayName: editInfo.displayName,
+        bio: editInfo.bio,
+        location: editInfo.location,
+      });
+    } catch (err) {
+      throw err.message;
+    }
+  }
+)
 
 export const emailLogin = createAsyncThunk(
   "user/emailLogin",
@@ -57,6 +78,28 @@ export const emailLogin = createAsyncThunk(
     }
   }
 );
+
+export const register = createAsyncThunk(
+  "user/emailLogin",
+  async (registerInfo) => {
+    try {
+      await createUserWithEmailAndPassword (
+        auth,
+        registerInfo.email,
+        registerInfo.password
+      );
+
+      if(!auth.currentUser) return;
+
+      await updateProfile(auth.currentUser, {
+        displayName: registerInfo.displayName
+      });
+      setUserInfoDoc();
+    } catch (err) {
+      throw err.message;
+    }
+  }
+)
 
 export const logout = createAsyncThunk("user/logout", async (state) => {
   try {
@@ -94,7 +137,35 @@ export const userSlice = createSlice({
       state.user = initialState;
       signOut(auth);
     });
-  }
+    builder.addMatcher(
+      isAnyOf(
+        emailLogin.fulfilled,
+        editProfile.fulfilled
+      ),
+      (state) => {
+        state.status = "successful";
+      }
+    );
+    builder.addMatcher(
+      isAnyOf(
+        emailLogin.pending,
+        editProfile.pending
+      ),
+      (state) => {
+        state.status = "pending";
+      }
+    );
+    builder.addMatcher(
+      isAnyOf(
+        emailLogin.rejected,
+        editProfile.rejected
+      ),
+      (state, action) => {
+        state.status = "failed";
+        
+      }
+    );
+  },
 });
 
 

@@ -1,10 +1,11 @@
 import Login from "./Login";
 import Register from "./Register";
-import userSlice, { logout } from "./userSlice";
+import userSlice, { login, logout } from "./userSlice";
 
 export {
   Login,
   Register,
   userSlice,
-  logout
+  logout,
+  login
 };
