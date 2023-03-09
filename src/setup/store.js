@@ -4,17 +4,19 @@ import { persistReducer } from "redux-persist";
 import sidebarContentReducer from "../reducers/sidebarContentReducer";
 import storage from "redux-persist/lib/storage";
 import convoReducer from "../reducers/convoReducer";
+import { userSlice } from "../features/auth";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["convos", "search", "profile"]
+  blacklist: ["user", "convos", "search", "profile"]
 };
 
 const reducer = combineReducers({
   sidebarContent: sidebarContentReducer,
-  convo: convoReducer
+  convo: convoReducer,
+  user: userSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

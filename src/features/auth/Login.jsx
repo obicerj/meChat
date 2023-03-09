@@ -3,25 +3,37 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Input from "../../components/Input";
 import { auth } from "../../firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
+import { emailLogin, getUserState } from "./userSlice";
 
 const Login = ({ setIsAuth}) => {
-  const [err, setErr] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const {status, errorMessage} = useSelector(getUserState);
   const dispatch = useDispatch();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+  const [err, setErr] = useState(false);
 
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        dispatch(changeSidebarContent("convos"));
-    } catch (err) {
-        setErr(true);
-    }
-}
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    dispatch(emailLogin({ email, password }));
+
+    // const email = e.target[0].value;
+    // const password = e.target[1].value;
+
+    // try {
+    //     await signInWithEmailAndPassword(auth, email, password);
+    //     dispatch(changeSidebarContent("convos"));
+    // } catch (err) {
+    //     setErr(true);
+    // }
+  }
+
+
+
   return (
     <div className="bg-slate-900">
       <div className="w-2/5 mx-auto flex flex-col justify-center h-screen">
@@ -38,6 +50,8 @@ const Login = ({ setIsAuth}) => {
               inputType={"email"}
               inputName={"email"}
               inputID={"email"}
+              value={email}
+              setValue={setEmail}
               inputPlaceholder={"e.g your-email@mechat.com"}
             />
           </div>
@@ -48,6 +62,8 @@ const Login = ({ setIsAuth}) => {
               inputType={"password"}
               inputName={"password"}
               inputID={"password"}
+              value={password}
+              setValue={setPassword}
               inputPlaceholder={"********"}
             />
           </div>

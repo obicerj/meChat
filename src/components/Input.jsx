@@ -7,7 +7,9 @@ const Input = ({
   inputName, 
   inputID,
   inputPlaceholder,
-  inputClass
+  inputClass,
+  value,
+  setValue
 }) => {
   return (
     <>
@@ -15,6 +17,8 @@ const Input = ({
       <input
         type={inputType}
         name={inputName}
+        value={value}
+        onChange={(e) => setValue && setValue(e.target.value)}
         id={inputID}
         placeholder={inputPlaceholder}
         className={`
