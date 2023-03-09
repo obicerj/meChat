@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Input from "../../components/Input";
 import { auth, db } from "../../firebase";
-import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
+import { changeSidebarContent } from "../sidebar/sidebarContentSlice";
 
 const Register = ({setIsAuth}) => {
   const [err, setErr] = useState(false);

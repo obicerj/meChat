@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import Input from "../../components/Input";
 import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSidebarContent } from "../../reducers/sidebarContentReducer";
+import { changeSidebarContent } from "../sidebar/sidebarContentSlice";
 import { emailLogin, getUserState } from "./userSlice";
 
 const Login = ({ setIsAuth}) => {

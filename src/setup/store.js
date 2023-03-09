@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
-import sidebarContentReducer from "../reducers/sidebarContentReducer";
+import sidebarContentReducer from "../features/sidebar/sidebarContentSlice";
 import storage from "redux-persist/lib/storage";
 import convoReducer from "../reducers/convoReducer";
 import { userSlice } from "../features/auth";
