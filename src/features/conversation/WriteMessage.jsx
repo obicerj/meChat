@@ -4,50 +4,66 @@ import { AuthContext } from "../../context/AuthContext";
 import { ConvoContext } from "../../context/ConvoContext";
 import { db } from "../../firebase";
 import { v4 as uuid } from "uuid";
+import useMessage from "../../utils/hooks/useMessage";
+import { useSelector } from "react-redux";
+import { getConvoState } from "./convoSlice";
+import { getUserState } from "../auth/userSlice";
 
 const WriteMessage = () => {
   const [text, setText] = useState("");
-  const { currentUser } = useContext(AuthContext);
-  const { data } = useContext(ConvoContext);
+
+  const { sendMessage } = useMessage();
+
+  // const { currentUser } = useContext(AuthContext);
+  // const { data } = useContext(ConvoContext);
+
+  const { chatId, recipient } = useSelector(getConvoState);
+  const { user: currentUser } = useSelector(getUserState);
 
   const handleSend = async (e) => {
-    e.preventDefault();
     
     try {
+      e.preventDefault();
+      
       if(text) {
-        await updateDoc(doc(db, "chats", data.chatId), {
-          message: arrayUnion({
-            id: uuid(),
-            text,
-            senderId: currentUser.uid,
-            date: Timestamp.now()
-          })
-        });
-    
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [data.chatId + ".lastMessage"]: {
-            text,
-          },
-          [data.chatId + ".date"]: serverTimestamp(),
-        });
-    
-        await updateDoc(doc(db, "userChats", data.user.uid), {
-          [data.chatId + ".lastMessage"]: {
-            text,
-          },
-          [data.chatId + ".date"]: serverTimestamp(),
-        });
-    
+        
         setText("");
+        // sendMessage(text);
+
+        // await updateDoc(doc(db, "chats", data.chatId), {
+        //   message: arrayUnion({
+        //     id: uuid(),
+        //     text,
+        //     senderId: currentUser.uid,
+        //     date: Timestamp.now()
+        //   })
+        // });
+    
+        // await updateDoc(doc(db, "userChats", currentUser.uid), {
+        //   [data.chatId + ".lastMessage"]: {
+        //     text,
+        //   },
+        //   [data.chatId + ".date"]: serverTimestamp(),
+        // });
+    
+        // await updateDoc(doc(db, "userChats", data.user.uid), {
+        //   [data.chatId + ".lastMessage"]: {
+        //     text,
+        //   },
+        //   [data.chatId + ".date"]: serverTimestamp(),
+        // });
+    
       }
     } catch (err) {
       console.log(err.message);
+      throw err.message;
     }
   }
 
   return (
     <div className="w-full flex items-center relative gap-2 px-2 py-1.5">
-      <div className="bg-slate-900 relative w-full flex px-2 py-2 items-center gap-1 rounded-full">
+      <form onSubmit={handleSend}
+      className="bg-slate-900 relative w-full flex px-2 py-2 items-center gap-1 rounded-full">
         <div className="flex p-2 ml-0.5">
           <label className="cursor-pointer">
             <input type="file" accept="image/*" className="hidden" />
@@ -75,7 +91,6 @@ const WriteMessage = () => {
           className="bg-transparent caret-white text-gray-100 px-2 py-2 w-full outline-none"
           />
         <button
-          onClick={handleSend}
           className="bg-blue-600 hover:bg-blue-700 rounded-full relative ml-auto h-full flex items-center justify-center px-2.5 py-2.5 cursor-pointer"
         >
           <svg
@@ -93,7 +108,7 @@ const WriteMessage = () => {
             />
           </svg>
         </button>
-      </div>
+      </form>
     </div>
   );
 };

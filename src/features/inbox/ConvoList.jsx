@@ -1,38 +1,71 @@
+import { current } from "@reduxjs/toolkit";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../../components/Avatar";
 import { AuthContext } from "../../context/AuthContext";
 import { ConvoContext } from "../../context/ConvoContext";
 import { db } from "../../firebase";
 import useFormatDate from "../../utils/hooks/useFormatDate";
+import { getUserState } from "../auth/userSlice";
+import { changeConvo, getConvoState } from "../conversation/convoSlice";
+
 
 const ConvoList = () => {
+  const { user: currentUser } = useSelector(getUserState);
 
+  // const [chats, setChats] = useState();
+
+  const [recipient, setRecipient] = useState();
+  const [lastMessageDate, setLastMessageDate] = useState("");
+  
+  const { chatId } = useSelector(getConvoState);
+  
   const [convos, setConvos] = useState([]);
-
-  const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ConvoContext);
+  
+  const dispatch = useDispatch();
+  // const { currentUser } = useContext(AuthContext);
+  // const { dispatch } = useContext(ConvoContext);
 
   const formatDate = useFormatDate();
 
+  // useEffect(() => {
+  //   dispatch({ type: "CHANGE_USER", payload: ""});
+
+  //   const getConvos = () => {
+  //     const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), async (doc) => {
+  //       setConvos(doc.data());
+  //     });
+  //     return () => {
+  //       unsub();
+  //     };
+  //   };
+
+  //   currentUser.uid && getConvos();
+  // }, [currentUser.uid]);
+
+  const handleSelect = (recipient) => {
+    // dispatch({ type: "CHANGE_USER", payload: u});
+    dispatch(changeConvo({ recipient }));
+  };
+
   useEffect(() => {
-    dispatch({ type: "CHANGE_USER", payload: ""});
+    if(!currentUser.uid) return;
 
-    const getConvos = () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), async (doc) => {
-        setConvos(doc.data());
-      });
-      return () => {
-        unsub();
-      };
+    const userChatsDocRef = doc(db, "userChats", currentUser.uid);
+    const unsub = onSnapshot(userChatsDocRef, async (doc) => {
+      const convos = Object.entries({...doc.data()});
+      setConvos(convos);
+    });
+
+    return () => {
+      unsub();
     };
-
-    currentUser.uid && getConvos();
   }, [currentUser.uid]);
 
-  const handleSelect = (u) => {
-    dispatch({ type: "CHANGE_USER", payload: u});
-  };
+  
+
+  
 
   return (
     <>
@@ -49,7 +82,7 @@ const ConvoList = () => {
 
         {convos && (
           <ul className="flex flex-col gap-2 mt-2 mx-2">
-            {Object.entries(convos)
+            {convos
               ?.sort((a, b) => b[1].date - a[1].date)
               .map((convo) => {
                 return (

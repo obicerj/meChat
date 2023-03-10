@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeSidebarContent } from "../sidebar/sidebarContentSlice";
 import { emailLogin, getUserState } from "./userSlice";
 
-const Login = ({ setIsAuth}) => {
+const Login = ({ setIsAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -20,7 +20,7 @@ const Login = ({ setIsAuth}) => {
     e.preventDefault();
 
     dispatch(emailLogin({ email, password }));
-
+    
     // const email = e.target[0].value;
     // const password = e.target[1].value;
 
