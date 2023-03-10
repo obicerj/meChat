@@ -13,14 +13,14 @@ import { ChatContextProvider } from './context/ConvoContext';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <AuthContextProvider>
-      <ChatContextProvider>
+    {/* <AuthContextProvider> */}
+      {/* <ChatContextProvider> */}
         {/* <PersistGate persistor={persistor}> */}
         <React.StrictMode>
           <App />
         </React.StrictMode>
         {/* </PersistGate> */}
-      </ChatContextProvider>
-    </AuthContextProvider>
+      {/* </ChatContextProvider> */}
+    {/* </AuthContextProvider> */}
   </Provider>
 );

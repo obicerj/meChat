@@ -1,12 +1,15 @@
 import { doc, getDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import Avatar from "../../components/Avatar";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import useFormatDate from "../../utils/hooks/useFormatDate";
+import { getUserState } from "../auth/userSlice";
 
 const MessageBubble = ({ message, user }) => {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
+  const { user: currentUser } = useSelector(getUserState);
 
   const [msgDate, setMsgDate] = useState("");
   const [senderData, setSenderData] = useState();
