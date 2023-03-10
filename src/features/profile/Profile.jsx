@@ -5,27 +5,29 @@ import { FiMail, FiMapPin } from "react-icons/fi";
 // import { getUserState, editProfile } from "../../reducers/userSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import { useSelector } from "react-redux";
+import { getUserState } from "../auth/userSlice";
 
 
 
 const Profile = () => {
+  const {user} = useSelector(getUserState);
+  // const [user, setUser] = useState(null);
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const docRef = doc(db, "users", auth.currentUser.uid);
-    getDoc(docRef)
-      .then((doc) => {
-        if (doc.exists()) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const docRef = doc(db, "users", auth.currentUser.uid);
+  //   getDoc(docRef)
+  //     .then((doc) => {
+  //       if (doc.exists()) {
+  //         setUser(doc.data());
+  //       } else {
+  //         console.log("No such document!");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting document:", error);
+  //     });
+  // }, []);
 
 
   return (
