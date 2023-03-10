@@ -28,7 +28,7 @@ const WriteMessage = () => {
       if(text) {
         
         setText("");
-        // sendMessage(text);
+        sendMessage(text);
 
         // await updateDoc(doc(db, "chats", data.chatId), {
         //   message: arrayUnion({

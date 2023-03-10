@@ -8,6 +8,7 @@ import {
   getDoc, 
   increment, 
   Timestamp,
+  serverTimestamp,
   updateDoc 
 } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -17,87 +18,77 @@ const useMessage = () => {
   const { chatId, recipient } = useSelector(getConvoState);
   const { user: currentUser } = useSelector(getUserState);
 
-  const createLastMessage = (text) => {
+  const createLastMessage = async (text) => {
     const userChatDocRef = doc(db, "userChats", currentUser.uid);
     const recipientChatDocRef = doc(db, "userChats", recipient.uid);
 
-    // chatId: currentUser.uid > action.payload.uid ? currentUser.uid + action.payload.uid : action.payload.uid + currentUser.uid,
-    
-    // console.log(chatId);
-    // try {
-      // await updateDoc(doc(db, "chats", chatId.toString()), {
-      //   message: arrayUnion({
-      //     id: uuid(),
-      //     text,
-      //     senderId: currentUser.uid,
-      //     date: Timestamp.now(),
-      //   }),
-      // });
+    try {
+      const recipientChatDocData = (await getDoc(recipientChatDocRef)).data();
 
-      // await updateDoc(userChatDocRef, {
+      // updateDoc(userChatDocRef, {
       //     [chatId + ".lastMessage"]: {
       //       text,
+      //       date: Timestamp.now()
       //     },
-      //     [chatId + ".date"]: serverTimestamp(),
+      //     // [chatId + ".date"]: serverTimestamp(),
       //   });
 
-      // await updateDoc(recipientChatDocRef, {
+      // updateDoc(recipientChatDocRef, {
       //     [chatId + ".lastMessage"]: {
       //       text,
+      //       date: Timestamp.now(),
       //     },
-      //     [chatId + ".date"]: serverTimestamp(),
+      //     // [chatId + ".date"]: serverTimestamp(),
       //   });
 
-
-      
-        // await updateDoc(doc(db, "chats", data.chatId), {
-        //   message: arrayUnion({
-        //     id: uuid(),
-        //     text,
-        //     senderId: currentUser.uid,
-        //     date: Timestamp.now()
-        //   })
-        // });
+        await updateDoc(doc(db, "chats", chatId), {
+          message: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now()
+          })
+        });
     
-        // await updateDoc(doc(db, "userChats", currentUser.uid), {
-        //   [data.chatId + ".lastMessage"]: {
-        //     text,
-        //   },
-        //   [data.chatId + ".date"]: serverTimestamp(),
-        // });
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [chatId + ".lastMessage"]: {
+            text,
+          },
+          [chatId + ".date"]: serverTimestamp(),
+        });
     
-        // await updateDoc(doc(db, "userChats", data.user.uid), {
-        //   [data.chatId + ".lastMessage"]: {
-        //     text,
-        //   },
-        //   [data.chatId + ".date"]: serverTimestamp(),
-        // });
+        await updateDoc(doc(db, "userChats", recipient.uid), {
+          [chatId + ".lastMessage"]: {
+            text,
+          },
+          [chatId + ".date"]: serverTimestamp(),
+        });
 
-    // } catch (err) {
-    //   throw err;
-    // }
+
+      } catch (err) {
+        throw err.message;
+    }
   };
 
   const sendMessage = (text) => {
-    console.log("CD", currentUser.displayName)
-    // const chatDocRef = doc(db, "chats", chatId.toString());
+    const chatDocRef = doc(db, "chats", chatId.toString());
 
-    // const messageInfo = {
-    //   id: uuid(),
-    //   text,
-    //   text: currentUser.uid,
-    //   date: Timestamp.now()
-    // };
+    const messageInfo = {
+      id: uuid(),
+      text,
+      senderId: currentUser.uid,
+      date: Timestamp.now()
+    };
 
-    // try {
-    //   updateDoc(chatDocRef, {
-    //     text: arrayUnion(messageInfo)
-    //   });
+    try {
+      updateDoc(chatDocRef, {
+        text: arrayUnion(messageInfo)
+      });
 
-    //   createLastMessage(text);
-    // } catch (err) {
-    //   throw err.message;
-    // }
+      createLastMessage(text);
+    } catch (err) {
+      throw err.message;
+    }
   }
 
   const deleteMessage = (text) => {
