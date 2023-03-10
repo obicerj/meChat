@@ -6,14 +6,17 @@ import useGetUsers from "../../utils/hooks/useGetUsers";
 import { changeConvo } from "../conversation/convoSlice";
 import { ConvoContext } from "../../context/ConvoContext";
 import Avatar from "../../components/Avatar";
+import { useSelector } from "react-redux";
+import { getUserState } from "../auth/userSlice";
 
 const SearchPeople = () => {
   const [ usersList, setUsersList ] = useState([]);
   const [ searchVal, setSearchVal ] = useState([]);
   const [ err, setErr ] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
+  const { user: currentUser } = useSelector(getUserState);
   const { users } = useGetUsers(currentUser.uid);
-  const { dispatch } = useContext(ConvoContext);
+  // const { dispatch } = useContext(ConvoContext);
 
   const handleSearch = async () => {
     // const q = query(collection(db, "users"), where("displayName", "==", username))
@@ -60,13 +63,13 @@ const SearchPeople = () => {
   };
 
   useEffect(() => {
-    dispatch({ type: "CHANGE_USER", payload: "" });
+    // dispatch({ type: "CHANGE_USER", payload: "" });
 
   }, [currentUser.uid])
 
   const handleSelect = async (user) => {
 
-    dispatch({ type: "CHANGE_USER", payload: user });
+    // dispatch({ type: "CHANGE_USER", payload: user });
 
 
     // check if group chat exists in firestore
@@ -118,7 +121,7 @@ const SearchPeople = () => {
 
     try {
 
-      dispatch(changeConvo({ recipient }));
+      // dispatch(changeConvo({ recipient }));
 
       console.log(recipient)
 
