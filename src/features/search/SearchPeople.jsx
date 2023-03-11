@@ -6,17 +6,47 @@ import useGetUsers from "../../utils/hooks/useGetUsers";
 import { changeConvo } from "../conversation/convoSlice";
 import { ConvoContext } from "../../context/ConvoContext";
 import Avatar from "../../components/Avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserState } from "../auth/userSlice";
+import Modal from "../../components/Modal";
+import AddContactModal from "./AddContactModal";
 
 const SearchPeople = () => {
   const [ usersList, setUsersList ] = useState([]);
   const [ searchVal, setSearchVal ] = useState([]);
+  const [ showModal, setShowModal ] = useState(false);
+
+  const [ selectedUser, setSelectedUser ] = useState({});
+
+  // const {recipient} = useSelector(getUserState);
+
+  const dispatch = useDispatch();
+
   const [ err, setErr ] = useState("");
   // const { currentUser } = useContext(AuthContext);
   const { user: currentUser } = useSelector(getUserState);
+  const [addRecipient, setAddRecipient] = useState();
   const { users } = useGetUsers(currentUser.uid);
   // const { dispatch } = useContext(ConvoContext);
+
+  const handleModalClick = (user) => {
+    setShowModal((current) => !current);
+    setSelectedUser(user);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const modalActionBar = (
+    <>
+      <button onClick={() => handleAdd(selectedUser)}>Add</button>
+    </>
+  );
+
+  // const modal = (<Modal onClose={handleModalClose} actionBar={modalActionBar}>
+  //   <p>Sample Content Modal</p>
+  // </Modal>);
 
   const handleSearch = async () => {
     // const q = query(collection(db, "users"), where("displayName", "==", username))
@@ -117,11 +147,10 @@ const SearchPeople = () => {
   }
 
   const addContact = async (recipient) => {
-
-
+    console.log('aC', recipient);
     try {
 
-      // dispatch(changeConvo({ recipient }));
+      dispatch(changeConvo(recipient));
 
       console.log(recipient)
 
@@ -195,6 +224,8 @@ const SearchPeople = () => {
       ? currentUser.uid + recipient.uid
       : recipient.uid + currentUser.uid;
 
+      
+      
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -202,11 +233,39 @@ const SearchPeople = () => {
 
       await addContact(recipient);
 
-
     } catch (err) {
       console.log(err)
     }
   };
+
+  // 
+  const handleAddContact = (recipientUser) => {
+
+    setShowModal((current) => !current);
+    setAddRecipient(recipientUser)
+    // return (
+    //   <AddContactModal 
+    //     setShowModal={setShowModal}
+    //     currentUser={currentUser}
+    //     recipient={user}
+    //   />
+    // )
+  }
+
+  // const modal = () => {
+  //   return (
+  //     <AddContactModal 
+  //     currentUser={currentUser}
+  //     recipient={recipient}
+  //     setShowModal={setShowModal}
+  //     />
+  //   )
+  // }
+
+  // const modal = (
+  // <Modal onClose={handleModalClose} actionBar={modalActionBar}>
+  //   <p>Sample Content Modal</p>
+  // </Modal>);
 
 
   return (
@@ -253,7 +312,8 @@ const SearchPeople = () => {
               {users?.length !== 0 &&
                 users?.map((user, i) => (
                   <li
-                    onClick={() => handleSelect(user)}
+                    onClick={() => handleAddContact(user)}
+                    // onClick={() => handleSelect(user)}
                     key={i}
                     className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:cursor-pointer 
                   hover:bg-gray-700/50"
@@ -279,7 +339,7 @@ const SearchPeople = () => {
               {usersList?.length !== 0 &&
                 usersList?.map((user, i) => (
                   <li
-                    onClick={() => handleSelect(user)}
+                    onClick={() => handleAddContact(user)}
                     key={i}
                     className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:cursor-pointer 
                   hover:bg-gray-700/50"
@@ -307,6 +367,15 @@ const SearchPeople = () => {
               </div>
             </>
           )}
+
+          {/* {showModal && modal} */}
+          { showModal && (
+              <AddContactModal 
+                setShowModal={setShowModal}
+                currentUser={currentUser}
+                recipient={addRecipient}
+              />
+          ) }
         </ul>
       </div>
     </>
