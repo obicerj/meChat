@@ -13,7 +13,7 @@ const MessageBubbleWrapper = ({user}) => {
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", chatId), async (doc) => {
-      doc.exists() && setMessages(Object.entries(doc.data().message));
+      doc.exists() && setMessages(Object.entries(doc.data().message || {}) || {});
     });
 
     return () => {
