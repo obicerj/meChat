@@ -8,6 +8,7 @@ import { changeSidebarContent } from "./sidebarContentSlice";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { logout } from "../auth";
+import { resetConvo } from "../conversation/convoSlice";
 
 const Sidebar = () => {
 
@@ -27,6 +28,8 @@ const Sidebar = () => {
 
   const handleSignOut = () => {
     dispatch(logout());
+    // dispatch(resetConvo());
+    dispatch(resetConvo());
   }
 
   return (
