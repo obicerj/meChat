@@ -17,7 +17,7 @@ function Modal({ onClose, children, actionBar }) {
         <div className="flex flex-col justify-between h-full">
           {children}
         </div>
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-6">
           {actionBar}
         </div>
       </div>
