@@ -26,18 +26,29 @@ const AddContactModal = ({
       throw err.message;
     }
   };
+  
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   const modalAction = (
-    <>
-      <button onClick={addContactHandler}>Add user</button>
-    </>
-  )
+    <div className="flex gap-2">
+      <button 
+        className="bg-red-600 text-white py-1 px-4 rounded"
+        onClick={handleClose}>Cancel</button>
+      <button 
+        className="bg-blue-700 text-white py-1 px-4 rounded"
+        onClick={addContactHandler}>Add</button>
+    </div>
+  );
+
 
   return (
       <Modal 
+        onClose={handleClose}
         actionBar={modalAction}
       >
-      <p>Test Modal</p>  
+      <p className="text-lg">Start conversation with <span className="font-semibold">{recipient.displayName}</span>?</p>  
       </Modal>
   );
 };
