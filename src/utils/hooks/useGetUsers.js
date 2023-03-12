@@ -1,4 +1,6 @@
 import { collection,
+  doc,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -61,5 +63,18 @@ const useGetUsers = (userID) => {
 
   return { users, getUsers };
 }
+
+const useGetUser = () => {
+  const getUserInfo = async (userID) => {
+    const recipientDocRef = doc(db, "users", userID);
+    const recipientData = (await getDoc(recipientDocRef)).data();
+  
+    return recipientData;
+  };
+
+  return getUserInfo;
+};
+
+export { useGetUser };
 
 export default useGetUsers;
