@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";

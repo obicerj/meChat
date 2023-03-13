@@ -3,7 +3,6 @@ import Modal from "../../components/Modal";
 import useAddContact from "../../utils/hooks/useAddContact";
 import { changeConvo } from "../conversation/convoSlice";
 
-
 const AddContactModal = ({
   currentUser,
   recipient,

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
 import Input from "../../components/Input";
-import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSidebarContent } from "../sidebar/sidebarContentSlice";
 import { emailLogin, getUserState } from "./userSlice";
 
 const Login = ({ setIsAuth }) => {
@@ -20,19 +16,7 @@ const Login = ({ setIsAuth }) => {
     e.preventDefault();
 
     dispatch(emailLogin({ email, password }));
-    
-    // const email = e.target[0].value;
-    // const password = e.target[1].value;
-
-    // try {
-    //     await signInWithEmailAndPassword(auth, email, password);
-    //     dispatch(changeSidebarContent("convos"));
-    // } catch (err) {
-    //     setErr(true);
-    // }
   }
-
-
 
   return (
     <div className="bg-slate-900">

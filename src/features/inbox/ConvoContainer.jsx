@@ -31,8 +31,6 @@ const ConvoContainer = () => {
     }
   }, [currentUser.uid]);
 
-  // console.log(convos);
-
   return (
     <>
       <div className="flex flex-col sticky top-0 bg-slate-900 z-10">
