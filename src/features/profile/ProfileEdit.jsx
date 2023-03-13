@@ -2,6 +2,7 @@ import { async } from "@firebase/util";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "../../components/Modal";
+import { editProfile } from "../auth/userSlice";
 
 const ProfileEdit = ({
   setShowModal,
@@ -16,6 +17,8 @@ const ProfileEdit = ({
   const handleChangeInfo = async (e) => {
     try {
       e.preventDefault();
+      await dispatch(editProfile({ displayName, bio, location}));
+      setShowModal(false);
     } catch (err) {
       console.log(err.message)
     }
@@ -24,6 +27,7 @@ const ProfileEdit = ({
   const modalAction = (
     <div className="contents">
       <button
+      onClick={handleChangeInfo}
       className="w-full bg-blue-700 text-white py-1 px-4 rounded"
       >Save</button>
     </div>
@@ -34,7 +38,8 @@ const ProfileEdit = ({
   }
   return (
     <Modal onClose={handleClose} actionBar={modalAction}>
-      <form className="flex flex-col gap-3.5 mt-2">
+      <form 
+      className="flex flex-col gap-3.5 mt-2">
         <div className="flex flex-col gap-1.5">
           <label className="font-semibold">Name</label>
           <input
