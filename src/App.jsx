@@ -1,9 +1,7 @@
-import { doc, onSnapshot, snapshotEqual, updateDoc } from "firebase/firestore";
-import { lazy, Suspense, useContext, useEffect, useState } from "react";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import './App.css'
-import { AuthContext } from "./context/AuthContext";
 import { getUserState, login } from "./features/auth/userSlice";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
@@ -47,11 +45,6 @@ function App() {
     </div>
   );
   
-
-  // console.log("c",currentUser.uid)
-
-  // const {currentUser} = useContext(AuthContext);
-
   return (
     <Suspense fallback={SuspenseLoading}>
     <div className="App">

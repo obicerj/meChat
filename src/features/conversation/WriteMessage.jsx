@@ -1,24 +1,10 @@
-import { arrayUnion, doc, serverTimestamp, Timestamp, updateDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { ConvoContext } from "../../context/ConvoContext";
-import { db } from "../../firebase";
-import { v4 as uuid } from "uuid";
 import useMessage from "../../utils/hooks/useMessage";
-import { useSelector } from "react-redux";
-import { getConvoState } from "./convoSlice";
-import { getUserState } from "../auth/userSlice";
 
 const WriteMessage = () => {
   const [text, setText] = useState("");
 
   const { sendMessage } = useMessage();
-
-  // const { currentUser } = useContext(AuthContext);
-  // const { data } = useContext(ConvoContext);
-
-  const { chatId, recipient } = useSelector(getConvoState);
-  const { user: currentUser } = useSelector(getUserState);
 
   const handleSend = async (e) => {
     
@@ -29,30 +15,6 @@ const WriteMessage = () => {
         
         setText("");
         sendMessage(text);
-
-        // await updateDoc(doc(db, "chats", data.chatId), {
-        //   message: arrayUnion({
-        //     id: uuid(),
-        //     text,
-        //     senderId: currentUser.uid,
-        //     date: Timestamp.now()
-        //   })
-        // });
-    
-        // await updateDoc(doc(db, "userChats", currentUser.uid), {
-        //   [data.chatId + ".lastMessage"]: {
-        //     text,
-        //   },
-        //   [data.chatId + ".date"]: serverTimestamp(),
-        // });
-    
-        // await updateDoc(doc(db, "userChats", data.user.uid), {
-        //   [data.chatId + ".lastMessage"]: {
-        //     text,
-        //   },
-        //   [data.chatId + ".date"]: serverTimestamp(),
-        // });
-    
       }
     } catch (err) {
       console.log(err.message);

@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Avatar from "../../components/Avatar";
 import Caster from "../../components/Caster";
-import { ConvoContext } from "../../context/ConvoContext";
 import { getUserState } from "../auth/userSlice";
 import { getConvoState } from "./convoSlice";
 import MessageBubbleWrapper from "./MessageBubbleWrapper";
 import WriteMessage from "./WriteMessage";
 
 const Convo = () => {
-  // const {data} = useContext(ConvoContext);
   const { user: currentUser } = useSelector(getUserState);
   const { chatId, recipient } = useSelector(getConvoState);
   
-
   return (
     <section className="flex h-full w-full bg-slate-700">
       {/* if convo exists */}

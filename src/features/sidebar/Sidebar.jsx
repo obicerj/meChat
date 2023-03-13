@@ -3,10 +3,7 @@ import Avatar from "../../components/Avatar";
 import { RiContactsLine, RiUserSmileLine, RiMessage3Line } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { getSidebarContent } from "./sidebarContentSlice";
 import { changeSidebarContent } from "./sidebarContentSlice";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
 import { logout } from "../auth";
 import { resetConvo } from "../conversation/convoSlice";
 
@@ -18,7 +15,6 @@ const Sidebar = () => {
     { name: "profile", content: "profile", icon: <RiUserSmileLine />, link: "profile" },
   ];
 
-  // const { content: sidebarContent } = useSelector(getSidebarContent);
   const dispatch = useDispatch();
 
   const sidebarBtnHandler = (content) => {
@@ -28,7 +24,6 @@ const Sidebar = () => {
 
   const handleSignOut = () => {
     dispatch(logout());
-    // dispatch(resetConvo());
     dispatch(resetConvo());
   }
 
@@ -68,7 +63,6 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      {/* Nav container */}
     </>
   );
 };

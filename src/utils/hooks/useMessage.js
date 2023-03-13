@@ -5,8 +5,6 @@ import {
   arrayRemove, 
   arrayUnion, 
   doc, 
-  getDoc, 
-  increment, 
   Timestamp,
   serverTimestamp,
   updateDoc 
@@ -19,28 +17,7 @@ const useMessage = () => {
   const { user: currentUser } = useSelector(getUserState);
 
   const createLastMessage = async (text) => {
-    const userChatDocRef = doc(db, "userChats", currentUser.uid);
-    const recipientChatDocRef = doc(db, "userChats", recipient.uid);
-
     try {
-      const recipientChatDocData = (await getDoc(recipientChatDocRef)).data();
-
-      // updateDoc(userChatDocRef, {
-      //     [chatId + ".lastMessage"]: {
-      //       text,
-      //       date: Timestamp.now()
-      //     },
-      //     // [chatId + ".date"]: serverTimestamp(),
-      //   });
-
-      // updateDoc(recipientChatDocRef, {
-      //     [chatId + ".lastMessage"]: {
-      //       text,
-      //       date: Timestamp.now(),
-      //     },
-      //     // [chatId + ".date"]: serverTimestamp(),
-      //   });
-
         await updateDoc(doc(db, "chats", chatId), {
           message: arrayUnion({
             id: uuid(),

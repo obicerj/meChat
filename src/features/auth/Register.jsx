@@ -1,10 +1,6 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Input";
-import { auth, db } from "../../firebase";
-import { changeSidebarContent } from "../sidebar/sidebarContentSlice";
 import { getUserState, register } from "./userSlice";
 
 const Register = ({setIsAuth}) => {
@@ -25,43 +21,8 @@ const Register = ({setIsAuth}) => {
     dispatch(
       register({ email, password, displayName })
     );
-
-    // const displayName = e.target[0].value;
-    // const email = e.target[1].value;
-    // const password = e.target[2].value;
-    // const location = 'Earth';
-    // const bio = 'Something about me';
-
-    // try {
-    //   // Creaste user
-    //   const res = await createUserWithEmailAndPassword(auth, email, password);
-    //   try {
-    //     //Update profile
-    //     await updateProfile(res.user, {
-    //       displayName,
-    //       location,
-    //       bio
-    //     });
-
-    //     // Store user to firestore
-    //     await setDoc(doc(db, "users", res.user.uid), {
-    //       uid: res.user.uid,
-    //       displayName,
-    //       email,
-    //       location,
-    //       bio
-    //     });
-
-    //     await setDoc(doc(db, "userChats", res.user.uid), {});
-    //     dispatch(changeSidebarContent("convos"));
-    //   } catch (err) {
-    //     console.log(err);
-    //     setErr(true);
-    //   }
-    // } catch (err) {
-    //   setErr(true);
-    // }
   }
+
   return (
     <div className="bg-slate-900">
       <div className="w-2/5 mx-auto flex flex-col justify-center h-screen">
