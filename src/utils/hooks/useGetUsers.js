@@ -29,7 +29,7 @@ const useGetUsers = (userID) => {
           where("uid", "!=", userID),
           orderBy("uid"),
           startAfter(latestDoc || 0),
-          limit(24)
+          limit(4)
         );
       } else {
         usersColRef = collection(db, "users");
@@ -46,11 +46,13 @@ const useGetUsers = (userID) => {
         setIsMaximum(true);
       }
 
-      setUsers(() => [...users]);
+      setUsers((state) => [...state, ...users]);
     } catch (err) {
       console.log(err);
     }
   };
+
+  // searchUser
 
   useEffect(() => {
     getUsers(userID);
@@ -61,7 +63,7 @@ const useGetUsers = (userID) => {
     };
   }, []);
 
-  return { users, getUsers };
+  return { users, getUsers, isMaximum };
 }
 
 const useGetUser = () => {

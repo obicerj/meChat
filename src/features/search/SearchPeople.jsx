@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { collection, getDocs, query, setDoc, where, doc, updateDoc, getDoc, serverTimestamp, arrayUnion, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import useGetUsers from "../../utils/hooks/useGetUsers";
@@ -20,8 +20,11 @@ const SearchPeople = () => {
   const [ err, setErr ] = useState("");
   const { user: currentUser } = useSelector(getUserState);
   const [addRecipient, setAddRecipient] = useState();
-  const { users } = useGetUsers(currentUser.uid);
+  const { users, getUsers, isMaximum } = useGetUsers(currentUser.uid);
 
+  const scrollHandler = () => {
+      getUsers(currentUser.uid);
+  }
 
   const handleSearch = async () => {
     try {
@@ -59,7 +62,6 @@ const SearchPeople = () => {
     setAddRecipient(recipientUser)
   }
 
-
   return (
     <>
       <div className="flex flex-col sticky top-0 bg-slate-900 z-10">
@@ -78,8 +80,10 @@ const SearchPeople = () => {
         </div>
       </div>
 
-      <div className="mt-4 mx-2">
-        <ul className="flex flex-col gap-2 mt-4">
+      <div 
+      className="mt-4 mx-2">
+        <ul 
+        className="flex flex-col gap-2 mt-4 mb-8">
           {err && <p className="text-white">User not found</p>}
           
           {usersList.length == 0 && searchVal.length == 0 && (
@@ -132,6 +136,12 @@ const SearchPeople = () => {
                   </li>
                 ))}
             </>
+          )}
+
+          {!isMaximum && (
+            <button 
+            onClick={scrollHandler}
+            className="text-slate-400 my-4">Load more...</button>
           )}
 
           {usersList.length == 0 && searchVal.length != 0 && (
