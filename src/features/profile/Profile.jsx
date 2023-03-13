@@ -2,9 +2,17 @@ import Avatar from "../../components/Avatar";
 import { FiMail, FiMapPin } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { getUserState } from "../auth/userSlice";
+import { useState } from "react";
+import ProfileEdit from "./ProfileEdit";
 
 const Profile = () => {
   const {user} = useSelector(getUserState);
+  const [showModal, setShowModal] = useState(false);
+  const { user: currentUser } = useSelector(getUserState);
+  
+  const handleEditProfile = () => {
+    setShowModal((current) => !current);
+  }
 
   return (
     <div>
@@ -31,10 +39,20 @@ const Profile = () => {
           <li className="flex flex-row items-center gap-2"><FiMail /><span>{user?.email}</span></li>
           <li className="flex flex-row items-center gap-2"><FiMapPin /><span>{user?.location}</span></li>
         </ul>
-        <button className="bg-blue-500 text-white w-full rounded-lg py-2 my-4">
+        <button 
+        onClick={() => handleEditProfile()}
+        className="bg-blue-500 text-white w-full rounded-lg py-2 my-4">
           Edit
         </button>
       </div>
+
+      {showModal && (
+        <ProfileEdit 
+        setShowModal={setShowModal}
+        currentUser={currentUser}
+        />
+      )}
+
     </div>
   );
 };
