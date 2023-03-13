@@ -69,9 +69,9 @@ const useMessage = () => {
   }
 
   const deleteMessage = (text) => {
-    const chatDocRef = doc(db, "chats", chatId);
+    const chatDocRef = doc(db, "chats", chatId.toString());
     updateDoc(chatDocRef, {
-      text: arrayRemove(text)
+      message: arrayRemove(text)
     });
   };
 
