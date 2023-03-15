@@ -29,7 +29,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <nav className="relative hidden px-4 pt-4 pb-2 w-fit bg-slate-800 md:flex md:flex-col gap-4">
+      <nav className="relative hidden px-4 pt-4 pb-2 w-fit bg-slate-800 md:flex md:flex-col md:items-center gap-4">
         {/* USER AVATAR */}
         <button
           onClick={() => sidebarBtnHandler("profile")}
@@ -47,19 +47,34 @@ const Sidebar = () => {
         <div className="flex flex-col gap-8 mt-6">
           {MENU_LIST.map((menu) => {
             return (
+              <div className="has-tooltip">
               <button key={menu.name} 
               className="text-blue-400 text-2xl"
               onClick={() => sidebarBtnHandler(menu.content)}>
                 {menu.icon}
               </button>
+              <span
+              className="tooltip z-20
+              rounded-lg shadlow-lg px-2.5 py-0.5 bg-blue-500 right-18 ml-2
+              text-white text-sm capitalize"
+              >{menu.name}</span>
+              </div>
             )
           })}
         </div>
+
         <div className="absolute bottom-4 flex flex-col justify-center items-center">
+          <div className="has-tooltip">
           <button className="text-red-600 text-2xl" 
           onClick={ handleSignOut }>
             <FiLogOut />
           </button>
+          <span
+              className="tooltip z-20 w-max
+              rounded-lg shadlow-lg px-2.5 py-0.5 bg-blue-500 right-18 ml-2
+              text-white text-sm capitalize"
+              >Log out</span>
+          </div>
         </div>
       </nav>
 
