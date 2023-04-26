@@ -25,7 +25,7 @@ const Register = ({setIsAuth}) => {
 
   return (
     <div className="bg-slate-900">
-      <div className="w-2/5 mx-auto flex flex-col justify-center h-screen">
+      <div className="w-full md:w-2/5 px-4 md:px-0 py-8 mx-auto flex flex-col justify-center h-screen">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-slate-200">Create 
           <span className="text-blue-500"> Me</span>
